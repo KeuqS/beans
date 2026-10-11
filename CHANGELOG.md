@@ -14,6 +14,10 @@ This file records user-facing changes in each Beans release.
   bootstrap compilers. Slice access still requires `unsafe`. No runtime ABI
   or ownership rules change. The pre-existing nested-reference Option bug is
   tracked separately in `docs/BUGFIX_TODO.md`.
+- Timed process launches accept an already-established child process group
+  after a concurrent setup call fails on macOS. This fixes intermittent
+  `git: Operation not permitted` errors during dependency resolution while
+  preserving rejection of real setup failures and process-tree timeout cleanup.
 
 ## [0.1.53] - 2026-10-10
 

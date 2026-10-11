@@ -10355,9 +10355,15 @@ BRes beans_proc_run(BList* argv_packed, BList* env_packed, char* cwd,
         // through the exec pipe rather than by printing anything.
         if (budget >= 0 && setpgid(0, 0) != 0) {
             int e = errno;
-            rt_ssize_t ignored = write(exec_fd[1], &e, sizeof e);
-            (void)ignored;
-            _exit(127);
+            // The parent can establish this group concurrently. On macOS the
+            // racing child call can report EPERM even though the group is set.
+            // Accept only that completed state; a real setup failure must still
+            // stop before exec so timeout cleanup cannot miss descendants.
+            if (getpgrp() != getpid()) {
+                rt_ssize_t ignored = write(exec_fd[1], &e, sizeof e);
+                (void)ignored;
+                _exit(127);
+            }
         }
         dup2(in_fd[0], 0);
         dup2(out_fd[1], 1);

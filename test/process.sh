@@ -414,6 +414,11 @@ fi
 # One deadline must cover all blocking edges, including a helper that inherits
 # the pipes and a child that closes them before exit. A later ordinary run also
 # proves the deadline scope is restored after each error.
+echo "checking concurrent process-group setup and genuine setup failure"
+clang -O1 -g -pthread -fexceptions -funwind-tables test/process_group.c -lm \
+    -o "$tmp/process-group"
+run_timeout 30 "$tmp/process-group"
+
 echo "checking deadlines cover input, output, descendants and exit"
 cat >"$tmp/deadline.b" <<'DEADLINE'
 import std.io
