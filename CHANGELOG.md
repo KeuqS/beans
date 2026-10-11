@@ -4,6 +4,10 @@ This file records user-facing changes in each Beans release.
 
 ## Unreleased
 
+## [0.1.54] - 2026-10-11
+
+Release contract: language=1.0, runtime_abi=23.
+
 - Collection reads use one contract: brackets require an existing element and
   panic when it is absent; `get` returns `Option` without inserting or growing
   the collection. Fixed arrays gain `get`, and Bytes gains checked bracket

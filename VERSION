@@ -2,7 +2,7 @@
 # tools/gen_version_b.sh generates src/version.b; test/version.sh checks synchronization.
 # Release packagers require the tag to match this file.
 # Keep the compiler below 1.0.0 until all public 1.0 release gates pass.
-compiler=0.1.53
+compiler=0.1.54
 language=1.0
 
 # 23: Adds the same-thread compiler stack runner and bounded process execution used by dependency fetches.
